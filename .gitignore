@@ -1,2 +1,6 @@
 bin/Debug/
 AutoFullPrice/bin
+/packages
+/Unk.Biz/bin/Debug
+/Unk.WebApi/obj/Debug
+/WebAdmin/obj/Debug
