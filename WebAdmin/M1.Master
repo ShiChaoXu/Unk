@@ -1,0 +1,184 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="M1.master.cs" Inherits="WebAdmin.M1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="apple-touch-icon" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" href="assets/img/favicons/favicon.ico" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,900%7CRoboto+Slab:300,400%7CRoboto+Mono:400" />
+
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="assets/js/plugins/slick/slick.min.css" />
+    <link rel="stylesheet" href="assets/js/plugins/slick/slick-theme.min.css" />
+
+    <!-- AppUI CSS stylesheets -->
+    <link rel="stylesheet" href="assets/css/font-awesome.css" />
+    <link rel="stylesheet" href="assets/css/ionicons.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="assets/css/app.css" />
+    <link rel="stylesheet" href="assets/css/app-custom.css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="app-ui layout-has-drawer layout-has-fixed-header">
+    <div class="app-layout-canvas">
+        <div class="app-layout-container">
+
+            <!-- Drawer -->
+            <aside class="app-layout-drawer">
+
+                <!-- Drawer scroll area -->
+                <div class="app-layout-drawer-scroll">
+                    <!-- Drawer logo -->
+                    <div id="logo" class="drawer-header">
+                        <a href="index.html">
+                            <img class="img-responsive" src="assets/img/logo/logo-backend.png" title="AppUI" alt="AppUI" /></a>
+                    </div>
+
+                    <!-- Drawer navigation -->
+                    <nav class="drawer-main">
+                        <ul class="nav nav-drawer">
+
+                            <li class="nav-item nav-drawer-header">菜单</li>
+
+                            <li class="nav-item active">
+                                <a href="Default.aspx"><i class="ion-ios-speedometer-outline"></i>Dashboard</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="frontend_home.html"><i class="ion-ios-monitor-outline"></i>Frontend</a>
+                            </li>
+
+
+
+                        </ul>
+                    </nav>
+                    <!-- End drawer navigation -->
+
+                </div>
+                <!-- End drawer scroll area -->
+            </aside>
+            <!-- End drawer -->
+
+            <!-- Header -->
+            <header class="app-layout-header">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <button class="pull-left hidden-lg hidden-md navbar-toggle" type="button" data-toggle="layout" data-action="sidebar_toggle">
+                                <span class="sr-only">Toggle drawer</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+                            <!-- Header search form -->
+                            
+
+                            <!-- .navbar-left -->
+
+                            <ul class="nav navbar-nav navbar-right navbar-toolbar hidden-sm hidden-xs">
+
+                                <li class="dropdown dropdown-profile">
+                                    <a href="javascript:void(0)" data-toggle="dropdown">
+                                        <span class="m-r-sm" id="g_UserName">John Doe <span class="caret"></span></span>
+                                        <img class="img-avatar img-avatar-48" src="assets/img/avatars/avatar3.jpg" alt="User profile pic" />
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                       
+                                        <li>
+                                            <a href="#" id="BtnLogout">退出</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- .navbar-right -->
+                        </div>
+                    </div>
+                    <!-- .container-fluid -->
+                </nav>
+                <!-- .navbar-default -->
+            </header>
+            <!-- End header -->
+
+
+               <!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
+    <script src="assets/js/core/jquery.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="assets/js/core/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/core/jquery.scrollLock.min.js"></script>
+    <script src="assets/js/core/jquery.placeholder.min.js"></script>
+    <script src="assets/js/bootbox.js"></script>
+    <script src="assets/js/Domain.Utility.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app-custom.js"></script>
+
+    <!-- Page Plugins -->
+    <script src="assets/js/plugins/slick/slick.min.js"></script>
+    <script src="assets/js/plugins/chartjs/Chart.min.js"></script>
+    <script src="assets/js/plugins/flot/jquery.flot.min.js"></script>
+    <script src="assets/js/plugins/flot/jquery.flot.pie.min.js"></script>
+    <script src="assets/js/plugins/flot/jquery.flot.stack.min.js"></script>
+    <script src="assets/js/plugins/flot/jquery.flot.resize.min.js"></script>
+
+            <main class="app-layout-content container-fluid">
+
+                <!-- Page Content -->
+                <div class="container-fluid p-y-md" runat="server">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+                </div>
+                <!-- .container-fluid -->
+                <!-- End Page Content -->
+
+            </main>
+
+        </div>
+        <!-- .app-layout-container -->
+    </div>
+    <!-- .app-layout-canvas -->
+
+    <!-- Apps Modal -->
+    <!-- Opens from the button in the header -->
+    
+    <!-- End Apps Modal -->
+
+    <div class="app-ui-mask-modal"></div>
+
+    <script>
+        $(function () {
+            // Init page helpers (Slick Slider plugin)
+            App.initHelpers('slick');
+
+            if (window.localStorage.getItem("User") == null) {
+                window.location.href = "/Login.aspx";
+            } else {
+                g_s.user = window.localStorage.getItem("User");
+                $("#g_UserName").html(window.localStorage.getItem("User"));
+            }
+
+            $("#BtnLogout").click(function () {
+                bootbox.confirm("是否要退出本后台", function (data) {
+                    if (data) {
+                        window.localStorage.clear();
+                        window.location.href = "/Login.aspx";
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
