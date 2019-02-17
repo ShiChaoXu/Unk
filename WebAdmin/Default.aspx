@@ -52,7 +52,7 @@
             <a class="card bg-purple bg-inverse" href="javascript:void(0)">
                 <div class="card-block clearfix">
                     <div class="pull-right">
-                        <p class="h6 text-muted m-t-0 m-b-xs">新增会员</p>
+                        <p class="h6 text-muted m-t-0 m-b-xs">新增会员( 今日 )</p>
                         <p class="h3 m-t-sm m-b-0" id="g_CurrentUser">0</p>
                     </div>
                     <div class="pull-left m-r">
