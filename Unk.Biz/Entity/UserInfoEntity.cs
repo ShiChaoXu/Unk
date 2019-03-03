@@ -16,6 +16,9 @@ namespace Unk.Biz.Entity
         public string IDName { get; set; } = string.Empty;
         public DateTime IDBirthday { get; set; } = new DateTime();
         public string Referrer { get; set; } = string.Empty;
+        public string OnlyKeyword { get; set; } = string.Empty;
+        public string PayPassWord { get; set; } = string.Empty;
+        public string PayAddress { get; set; } = string.Empty;
     }
 
     public class UserInfoDetails : UserInfoEntity

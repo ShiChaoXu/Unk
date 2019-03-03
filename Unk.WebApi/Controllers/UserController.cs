@@ -115,6 +115,30 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpPost]
+        public object UpdateUserIDInfo([FromBody] UserInfoEntity p_UserView) {
+
+            return new
+            {
+                Data = g_UserInfoBiz.UpdateUserIDInfo(p_UserView)
+            };
+        }
+        [HttpPost]
+        public object UpdateUserKeyWord([FromBody] UserInfoEntity p_UserView) {
+            return new
+            {
+                Data = g_UserInfoBiz.UpdateUserKeyWords(p_UserView)
+            };
+        }
+
+        public object UpdateUserPwd([FromBody] UserInfoEntity p_UserView) {
+            return new
+            {
+                Data = g_UserInfoBiz.UpdateUserPwd(p_UserView, p_UserView.PayPassWord.Length > 0)
+            };
+        }
+
+
+        [HttpPost]
         public object RegNewUser([FromBody] RegNewUserModels p_UserView)
         {
             bool status = false;

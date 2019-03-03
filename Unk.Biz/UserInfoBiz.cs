@@ -53,6 +53,36 @@ from UserInfo as a
             }
         }
 
+        public bool UpdateUserIDInfo(Entity.UserInfoEntity userInfo) {
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                return conn.Execute($@"UPDATE UserInfo SET IDName = '{userInfo.IDName}', IDCard = '{userInfo.IDCard}' where id= ${userInfo.ID}") > 0;
+            }
+        }
+
+        public bool UpdateUserKeyWords(Entity.UserInfoEntity userInfo) {
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                return conn.Execute($@"UPDATE UserInfo SET OnlyKeyword = '{userInfo.OnlyKeyword}',PayAddress = '{userInfo.PayAddress}' where id = {userInfo.ID}") > 0;
+            }
+        }
+
+        public bool UpdateUserPwd(Entity.UserInfoEntity userInfo, bool IsPay = false) {
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                string sql = string.Empty;
+                if (IsPay)
+                {
+                    sql = $"UPDATE UserInfo SET PayPassWord = '{userInfo.PayPassWord}' where id = ${userInfo.ID}";
+                }
+                else {
+                    sql = $"UPDATE UserInfo SET UserPwd = '{userInfo.UserPwd}' where id = ${userInfo.ID}";
+                }
+                return conn.Execute(sql)>0;
+            }
+        }
+
+
         public Entity.UserInfoEntity GetUserByName(string p_user)
         {
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
