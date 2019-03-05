@@ -36,6 +36,14 @@ namespace Unk.WebApi.Controllers
             };
         }
 
+        [HttpGet]
+        public object GetAllDetailsByID(int userid) {
+            return new
+            {
+                Data = g_UserInfoBiz.GetUserListDetailsByID(userid)
+            };
+        }
+
         [HttpPost]
         public object Exist([FromBody] UserViewModels p_UserView)
         {

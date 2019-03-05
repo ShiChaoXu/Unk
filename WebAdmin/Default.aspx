@@ -286,11 +286,10 @@
         });
         function BtnEdit(obj) {
             Utility.Style.setLoading(true);
-            Utility.ajax.get(`User/GetAllDetails`, function (data) {
+            Utility.ajax.get(`User/GetAllDetailsByID?userid=${obj.dataset.userid}`, function (data) {
                 Utility.Style.setLoading(false);
-                var rList = data.filter(x => x.ID == obj.dataset.userid);
-                if (rList.length > 0) {
-                    var _obj = rList[0];
+                if (data != null) {
+                    var _obj = data;
                     console.log(_obj);
                     bootbox.dialog({
                         size: "large",
@@ -298,10 +297,10 @@
                         message: Utility.convert.Format(EditTemplate, _obj.UserName, _obj.UserPhone, _obj.UserPwd, _obj.ReferrerName, _obj.TotalUNK),
                         buttons: {
                             "cancel": {
-                                label:"取消"
+                                label: "取消"
                             },
                             "success": {
-                                label:"更新",
+                                label: "更新",
                                 className: 'btn btn-danger',
                                 callback: function (data) {
                                     var userForm = new Object();
@@ -323,12 +322,8 @@
                             }
                         }
                     });
-
-
-
-
                 } else {
-                    boolean.alert("系统繁忙");
+                    bootbox.alert("系统繁忙");
                 }
                 return false;
             });

@@ -47,7 +47,7 @@ order by b.CreateTime desc").ToList();
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
             {
                 var rList = conn.Query<TokenDetailsEntity>($@"
-SELECT * FROM TokenDetails WHERE UserID = ${p_UserID}
+SELECT * FROM TokenDetails WHERE UserID = {p_UserID}
 ").ToList();
                 rList = rList.GroupBy(x => x.TokenType).Select(x => new TokenDetailsEntity()
                 {

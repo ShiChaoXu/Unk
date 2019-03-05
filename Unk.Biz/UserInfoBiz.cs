@@ -32,6 +32,23 @@ from UserInfo as a
             }
         }
 
+        public Entity.UserInfoDetails GetUserListDetailsByID(int userid) {
+
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                Entity.UserInfoDetails userInfoDetails = conn.Query<Entity.UserInfoDetails>($@"
+select 
+a.*,
+(select UserName from UserInfo where UserPhone =a.Referrer ) as ReferrerName,
+ISNULL((select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and  UserID = a.id),0) as TotalUNK
+from UserInfo as a
+where a.id = {userid}
+").FirstOrDefault();
+                return userInfoDetails;
+            }
+        }
+
+
         public Entity.UserInfoEntity GetUserSingle(string p_id) {
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
             {
@@ -56,7 +73,7 @@ from UserInfo as a
         public bool UpdateUserIDInfo(Entity.UserInfoEntity userInfo) {
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
             {
-                return conn.Execute($@"UPDATE UserInfo SET IDName = '{userInfo.IDName}', IDCard = '{userInfo.IDCard}' where id= ${userInfo.ID}") > 0;
+                return conn.Execute($@"UPDATE UserInfo SET IDName = '{userInfo.IDName}', IDCard = '{userInfo.IDCard}' where id= {userInfo.ID}") > 0;
             }
         }
 
@@ -73,10 +90,10 @@ from UserInfo as a
                 string sql = string.Empty;
                 if (IsPay)
                 {
-                    sql = $"UPDATE UserInfo SET PayPassWord = '{userInfo.PayPassWord}' where id = ${userInfo.ID}";
+                    sql = $"UPDATE UserInfo SET PayPassWord = '{userInfo.PayPassWord}' where id = {userInfo.ID}";
                 }
                 else {
-                    sql = $"UPDATE UserInfo SET UserPwd = '{userInfo.UserPwd}' where id = ${userInfo.ID}";
+                    sql = $"UPDATE UserInfo SET UserPwd = '{userInfo.UserPwd}' where id = {userInfo.ID}";
                 }
                 return conn.Execute(sql)>0;
             }
@@ -174,7 +191,7 @@ UPDATE Userinfo set Referrer = '{pview.UserName}' where Referrer = '{v_UserInfo.
             }
             else
             {
-                v_desc = $"减少 {v_Remaning}份";
+                v_desc = $"减少 {v_Remaning} 份";
             }
             if (v_Remaning != 0)
             {
