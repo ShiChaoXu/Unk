@@ -48,6 +48,22 @@ where a.id = {userid}
             }
         }
 
+        public List<Entity.UserInfoDetails> GetUserListDetailsByDashBoard(string key)
+        {
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                return conn.Query<Entity.UserInfoDetails>($@"
+select 
+a.*,
+(select UserName from UserInfo where UserPhone =a.Referrer ) as ReferrerName,
+ISNULL((select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and  UserID = a.id),0) as TotalUNK
+from UserInfo as a
+where a.UserName like N'%{key}%' or a.UserPhone like '%{key}%'
+").ToList();
+            }
+        }
+
+
 
         public Entity.UserInfoEntity GetUserSingle(string p_id) {
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))

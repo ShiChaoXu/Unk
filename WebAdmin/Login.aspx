@@ -33,7 +33,7 @@
             var username = $("#username").val().trim();
             var userpwd = $("#userpwd").val().trim();
             var users = [
-                "13681525763", "17710328707", "13484001955"
+                "13681525763", "17710328707", "13484001955","18911768728"
             ];
             if (users.indexOf(username) != -1) {
                 Utility.Style.setLoading(true);

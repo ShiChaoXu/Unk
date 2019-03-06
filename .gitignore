@@ -4,3 +4,6 @@ AutoFullPrice/bin
 /Unk.Biz/bin/Debug
 /Unk.WebApi/obj/Debug
 /WebAdmin/obj/Debug
+/Unk.WebApi/obj/Release
+/WebAdmin/obj/Release
+/Unk.Biz/bin/Release

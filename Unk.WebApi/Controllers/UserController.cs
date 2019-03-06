@@ -37,6 +37,14 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpGet]
+        public object GetUserListDetailsByDashBoard(string key) {
+            return new
+            {
+                Data = g_UserInfoBiz.GetUserListDetailsByDashBoard(key)
+            };
+        }
+
+        [HttpGet]
         public object GetAllDetailsByID(int userid) {
             return new
             {

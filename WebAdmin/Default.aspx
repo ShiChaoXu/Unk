@@ -249,7 +249,7 @@
                     return;
                 }
                 Utility.Style.setLoading(true);
-                Utility.ajax.get(`User/GetAllDetails`, function (data) {
+                Utility.ajax.get(`User/GetUserListDetailsByDashBoard?key=${v_UserName}`, function (data) {
                     Utility.Style.setLoading(false);
                     var r_List = data.filter(x => x.UserName.indexOf(v_UserName) != -1 || x.UserPhone.indexOf(v_UserName) != -1);
                     if (r_List.length == 0) {
