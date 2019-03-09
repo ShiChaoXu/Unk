@@ -11,6 +11,18 @@ namespace Unk.Core.ViewModel
     {
         public string p_UserName { get; set; }
         public string p_UserPwd { get; set; }
+        public string p_MoneyAddress { get; set; }
+    }
+
+    public class TransferMoney
+    {
+        public string p_Type { get; set; }
+        public string p_TargetUserID { get; set; }
+        public string p_TargetUserName { get; set; }
+        public string p_TargetUserPhone { get; set; }
+        public decimal p_TransferMoney { get; set; }
+        public int p_FormUserID { get; set; }
+        public string p_FormUserPhone { get; set; }
     }
 
 
@@ -32,4 +44,5 @@ namespace Unk.Core.ViewModel
         public decimal TotalUNK { get; set; }
         public string ID { get; set; }
     }
+
 }

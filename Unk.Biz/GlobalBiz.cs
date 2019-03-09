@@ -17,7 +17,7 @@ namespace Unk.Biz
             {
                 string totalUser = conn.Query<string>("select count(id) from UserInfo").FirstOrDefault();
                 string totalCurrentUser = conn.Query<string>($"select count(id) from UserInfo where CreateTime between '{DateTime.Now.ToString("yyyy-MM-dd")}' and '{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}'").FirstOrDefault();
-                string totalUnk = conn.Query<string>("select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK'").FirstOrDefault();
+                string totalUnk = conn.Query<string>("select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and [Stauts] = 1").FirstOrDefault();
                 string currentPrice = conn.Query<string>("SELECT top 1 CurrentPrice FROM[UNK].[dbo].[GainsInHistory] order by id desc").FirstOrDefault();
                 return new Tuple<string, string, string, string>(totalUnk, totalUser, currentPrice, totalCurrentUser);
             }            

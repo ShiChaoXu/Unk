@@ -37,7 +37,8 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpGet]
-        public object GetUserListDetailsByDashBoard(string key) {
+        public object GetUserListDetailsByDashBoard(string key)
+        {
             return new
             {
                 Data = g_UserInfoBiz.GetUserListDetailsByDashBoard(key)
@@ -45,7 +46,8 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpGet]
-        public object GetAllDetailsByID(int userid) {
+        public object GetAllDetailsByID(int userid)
+        {
             return new
             {
                 Data = g_UserInfoBiz.GetUserListDetailsByID(userid)
@@ -55,22 +57,18 @@ namespace Unk.WebApi.Controllers
         [HttpPost]
         public object Exist([FromBody] UserViewModels p_UserView)
         {
-            UserInfoEntity v_user = CacheHelper.GetCache(CacheHelper.USER + p_UserView.p_UserName) as UserInfoEntity;
+            UserInfoEntity v_user = null;
             List<TokenDetailsEntity> tokenList = new List<TokenDetailsEntity>();
             if (v_user == null)
             {
                 v_user = g_UserInfoBiz.UserLogin(p_UserView.p_UserName, p_UserView.p_UserPwd);
-                if (v_user != null)
-                {
-                    tokenList = g_GainsInHistoryBiz.GetUserTokenList(v_user.ID);
-                }
             }
-            return new {
+            return new
+            {
                 Data = new
                 {
                     IsExist = v_user != null,
-                    User = v_user,
-                    TokenList = tokenList
+                    User = v_user
                 }
             };
         }
@@ -94,17 +92,20 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpGet]
-        public object GetTokenSummary() {
+        public object GetTokenSummary(int p_id)
+        {
             return new
             {
-                Data = g_GainsInHistoryBiz.GetEveryDataPrice()
+                Data = g_GainsInHistoryBiz.GetEveryDataPrice(),
+                TokenList = g_GainsInHistoryBiz.GetUserTokenList(p_id)
             };
         }
 
         [HttpGet]
         public object GetTokenTotalCount(string p_type, string p_userid)
         {
-            return new {
+            return new
+            {
                 Data = new
                 {
                     TotalCount = g_GainsInHistoryBiz.GetTokenCount(p_type, p_userid),
@@ -114,7 +115,8 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpGet]
-        public object GetGainsInHisotry(string p_type) {
+        public object GetGainsInHisotry(string p_type)
+        {
             return new
             {
                 Data = g_GainsInHistoryBiz.GetGainsInHisotryList(p_type)
@@ -131,22 +133,24 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpPost]
-        public object UpdateUserIDInfo([FromBody] UserInfoEntity p_UserView) {
-
+        public object UpdateUserIDInfo([FromBody] UserInfoEntity p_UserView)
+        {
             return new
             {
                 Data = g_UserInfoBiz.UpdateUserIDInfo(p_UserView)
             };
         }
         [HttpPost]
-        public object UpdateUserKeyWord([FromBody] UserInfoEntity p_UserView) {
+        public object UpdateUserKeyWord([FromBody] UserInfoEntity p_UserView)
+        {
             return new
             {
                 Data = g_UserInfoBiz.UpdateUserKeyWords(p_UserView)
             };
         }
 
-        public object UpdateUserPwd([FromBody] UserInfoEntity p_UserView) {
+        public object UpdateUserPwd([FromBody] UserInfoEntity p_UserView)
+        {
             return new
             {
                 Data = g_UserInfoBiz.UpdateUserPwd(p_UserView, p_UserView.PayPassWord.Length > 0)
@@ -179,7 +183,8 @@ namespace Unk.WebApi.Controllers
                         message = $"{p_UserView.UserName} 注册成功, 请登录系统!";
                     }
                 }
-                else {
+                else
+                {
                     status = false;
                     message = $"{p_UserView.UserName} 该用户已存在, 请输入新手机号.";
                 }
@@ -221,7 +226,8 @@ namespace Unk.WebApi.Controllers
                             }
                         };
                     }
-                    else {
+                    else
+                    {
                         return new
                         {
                             Data = new
@@ -232,7 +238,8 @@ namespace Unk.WebApi.Controllers
                         };
                     }
                 }
-                else {
+                else
+                {
                     return new
                     {
                         Data = new
@@ -243,7 +250,8 @@ namespace Unk.WebApi.Controllers
                     };
                 }
             }
-            else {
+            else
+            {
                 return new
                 {
                     Data = new
@@ -253,15 +261,17 @@ namespace Unk.WebApi.Controllers
                     }
                 };
             }
-            
+
         }
 
         [HttpGet]
-        public object DashBoard() {
+        public object DashBoard()
+        {
             var results = g_GlobalBiz.GetDashBoard();
             return new
             {
-                Data = new {
+                Data = new
+                {
                     totalUnk = results.Item1,
                     totalUser = results.Item2,
                     currentPrice = results.Item3,
@@ -271,7 +281,8 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpGet]
-        public object DeleteData(string p_userID) {
+        public object DeleteData(string p_userID)
+        {
             return new
             {
                 Data = new
@@ -282,7 +293,8 @@ namespace Unk.WebApi.Controllers
         }
 
         [HttpPost]
-        public object UpdateAccountAndAsset([FromBody] RegNewUserModels p_UserView) {
+        public object UpdateAccountAndAsset([FromBody] RegNewUserModels p_UserView)
+        {
             return new
             {
                 Data = new
@@ -292,5 +304,58 @@ namespace Unk.WebApi.Controllers
             };
         }
 
+
+        [HttpGet]
+        public object GetMyTeam(string p_uesrphone)
+        {
+            return new
+            {
+                Data = g_UserInfoBiz.GetMyTeam(p_uesrphone)
+            };
+        }
+
+        [HttpPost]
+        public object GetUserInfoByAddress([FromBody]UserViewModels userView)
+        {
+            return new
+            {
+                Data = g_UserInfoBiz.GetUserInfoByAddress(userView.p_MoneyAddress)
+            };
+        }
+
+        [HttpPost]
+        public object SetTransferMoney([FromBody] TransferMoney transfer)
+        {
+            var p_FormUserMoney = g_GainsInHistoryBiz.GetTokenCount(transfer.p_Type, transfer.p_FormUserID.ToString());
+            if (p_FormUserMoney < (double)transfer.p_TransferMoney * 1.01)
+            {
+                return new
+                {
+
+                    Data = new
+                    {
+                        Status = false,
+                        Message = "UNK余额不足, 不足以支付本次交易."
+                    }
+                };
+            }
+            return new
+            {
+                Data = new
+                {
+                    Status = g_GainsInHistoryBiz.SetTransferMoney(transfer),
+                    Message = "交易成功."
+                }
+            };
+        }
+
+        [HttpGet]
+        public object GetUserTokenDetailsList(string p_id) {
+            var rList = g_GainsInHistoryBiz.GetUserTokenDetailsList(p_id).ToList();
+            return new
+            {
+                Data = rList
+            };
+        }
     }
 }

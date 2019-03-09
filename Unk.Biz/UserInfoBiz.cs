@@ -26,7 +26,7 @@ namespace Unk.Biz
 select 
 a.*,
 (select UserName from UserInfo where UserPhone =a.Referrer ) as ReferrerName,
-ISNULL((select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and  UserID = a.id),0) as TotalUNK
+ISNULL((select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and [Stauts] = 1 and  UserID = a.id),0) as TotalUNK
 from UserInfo as a
 ").ToList();
             }
@@ -40,11 +40,19 @@ from UserInfo as a
 select 
 a.*,
 (select UserName from UserInfo where UserPhone =a.Referrer ) as ReferrerName,
-ISNULL((select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and  UserID = a.id),0) as TotalUNK
+ISNULL((select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and [Stauts] =1 and UserID = a.id),0) as TotalUNK
 from UserInfo as a
 where a.id = {userid}
 ").FirstOrDefault();
                 return userInfoDetails;
+            }
+        }
+
+        public List<Entity.UserInfoEntity> GetMyTeam(string userPhone)
+        {
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                return conn.Query<Entity.UserInfoEntity>($@"SELECT * FROM UserInfo where Referrer = '{userPhone}' order by CreateTime desc").ToList();
             }
         }
 
@@ -56,7 +64,7 @@ where a.id = {userid}
 select 
 a.*,
 (select UserName from UserInfo where UserPhone =a.Referrer ) as ReferrerName,
-ISNULL((select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and  UserID = a.id),0) as TotalUNK
+ISNULL((select SUM(CurrentIcon) from TokenDetails where TokenType = 'UNK' and [Stauts] = 1 and UserID = a.id),0) as TotalUNK
 from UserInfo as a
 where a.UserName like N'%{key}%' or a.UserPhone like '%{key}%'
 ").ToList();
@@ -89,7 +97,11 @@ where a.UserName like N'%{key}%' or a.UserPhone like '%{key}%'
         public bool UpdateUserIDInfo(Entity.UserInfoEntity userInfo) {
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
             {
-                return conn.Execute($@"UPDATE UserInfo SET IDName = '{userInfo.IDName}', IDCard = '{userInfo.IDCard}' where id= {userInfo.ID}") > 0;
+                if (conn.Query<int>($@"select count(id) from UserInfo where IDName = N'{userInfo.IDName}' or IDCard = '{userInfo.IDCard}'").FirstOrDefault()>0)
+                {
+                    return false;
+                }
+                return conn.Execute($@"UPDATE UserInfo SET  UserName = N'{userInfo.IDName}',IDName = N'{userInfo.IDName}', IDCard = '{userInfo.IDCard}' where id= {userInfo.ID}") > 0;
             }
         }
 
@@ -215,5 +227,15 @@ UPDATE Userinfo set Referrer = '{pview.UserName}' where Referrer = '{v_UserInfo.
             }
             return true;
         }
+
+        public Entity.UserInfoEntity GetUserInfoByAddress(string p_MoneyAddress)
+        {
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                return conn.Query<Entity.UserInfoEntity>($@"SELECT TOP(1) * FROM UserInfo WHERE PayAddress = '{p_MoneyAddress}' ").FirstOrDefault();
+            }
+        }
+
+       
     }
 }
