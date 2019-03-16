@@ -170,9 +170,7 @@ INSERT INTO [dbo].[UserInfo]
 ");
                 CurrentID = conn.Query<string>($@"SELECT ID FROM UserInfo WHERE UserPhone = '{model.UserName}'").FirstOrDefault();
             }
-
-            new GainsInHistoryBiz().UpdateAccountCoin("UNK", CurrentID, "40", "新用户注册");
-            new GainsInHistoryBiz().UpdateAccountCoin("UNK", model.pUserID, "20", $"推荐 {model.UserName} 新用户注册 奖励20");
+            
             return true;
         }
 

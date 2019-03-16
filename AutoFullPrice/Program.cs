@@ -16,8 +16,8 @@ namespace AutoFullPrice
         {
             string action = args[0];
             Random rd = new Random();
-            double r = rd.Next(101, 111);
-            r = r / 100;
+            double r = rd.Next(10100, 10115);
+            r = r / 10000;
             switch (action)
             {
                 case "AutoFullPriceHistory":
@@ -49,7 +49,7 @@ INSERT INTO [dbo].[GainsInHistory]
             'UNK'
            ,{Math.Round(StartPice, 4)}
            ,'{StartTime.ToString("yyyy-MM-dd")} 更新价格'
-           ,'{StartTime.ToString("yyyy-MM-dd 12:00:00")}')
+           ,'{StartTime.ToString("yyyy-MM-dd hh:mm:ss")}')
 ";
             return sql;
         }
