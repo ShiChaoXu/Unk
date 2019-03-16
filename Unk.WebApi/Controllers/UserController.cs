@@ -100,6 +100,14 @@ namespace Unk.WebApi.Controllers
                 TokenList = g_GainsInHistoryBiz.GetUserTokenList(p_id)
             };
         }
+        [HttpGet]
+        public object GetTokenSummary()
+        {
+            return new
+            {
+                Data = g_GainsInHistoryBiz.GetEveryDataPrice()
+            };
+        }
 
         [HttpGet]
         public object GetTokenTotalCount(string p_type, string p_userid)
