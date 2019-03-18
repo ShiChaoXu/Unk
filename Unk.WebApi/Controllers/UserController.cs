@@ -62,13 +62,18 @@ namespace Unk.WebApi.Controllers
             if (v_user == null)
             {
                 v_user = g_UserInfoBiz.UserLogin(p_UserView.p_UserName, p_UserView.p_UserPwd);
+                if (v_user != null)
+                {
+                    tokenList = g_GainsInHistoryBiz.GetUserTokenList(v_user.ID);
+                }
             }
             return new
             {
                 Data = new
                 {
                     IsExist = v_user != null,
-                    User = v_user
+                    User = v_user,
+                    TokenList = tokenList
                 }
             };
         }
