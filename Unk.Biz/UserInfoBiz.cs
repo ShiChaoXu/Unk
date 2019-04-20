@@ -97,7 +97,7 @@ where a.UserName like N'%{key}%' or a.UserPhone like '%{key}%'
         public bool UpdateUserIDInfo(Entity.UserInfoEntity userInfo) {
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
             {
-                if (conn.Query<int>($@"select count(id) from UserInfo where IDName = N'{userInfo.IDName}' or IDCard = '{userInfo.IDCard}'").FirstOrDefault()>0)
+                if (conn.Query<int>($@"select count(id) from UserInfo where IDName = N'{userInfo.IDName}' and IDCard = '{userInfo.IDCard}'").FirstOrDefault() > 0)
                 {
                     return false;
                 }
@@ -123,7 +123,7 @@ where a.UserName like N'%{key}%' or a.UserPhone like '%{key}%'
                 else {
                     sql = $"UPDATE UserInfo SET UserPwd = '{userInfo.UserPwd}' where id = {userInfo.ID}";
                 }
-                return conn.Execute(sql)>0;
+                return conn.Execute(sql) > 0;
             }
         }
 
@@ -135,8 +135,8 @@ where a.UserName like N'%{key}%' or a.UserPhone like '%{key}%'
                 return conn.Query<Entity.UserInfoEntity>($@"SELECT * FROM [UserInfo] where UserName = N'{p_user}'").FirstOrDefault();
             }
         }
-        
-        public bool  RegUser(RegNewUserModels model)
+
+        public bool RegUser(RegNewUserModels model)
         {
             var v_RefUser = GetUserSingle(model.pUserID);
             string CurrentID = string.Empty;
@@ -170,7 +170,7 @@ INSERT INTO [dbo].[UserInfo]
 ");
                 CurrentID = conn.Query<string>($@"SELECT ID FROM UserInfo WHERE UserPhone = '{model.UserName}'").FirstOrDefault();
             }
-            
+
             return true;
         }
 
@@ -231,6 +231,57 @@ UPDATE Userinfo set Referrer = '{pview.UserName}' where Referrer = '{v_UserInfo.
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
             {
                 return conn.Query<Entity.UserInfoEntity>($@"SELECT TOP(1) * FROM UserInfo WHERE PayAddress = '{p_MoneyAddress}' ").FirstOrDefault();
+            }
+        }
+
+        //News Controller.
+
+        public bool InsertOrUpdateNews(Entity.NewsEntity entity)
+        {
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                string sql = string.Empty;
+                if (entity.ID == 0)
+                {
+                    sql = $@"
+INSERT INTO News(Title,Description,CreateTime,[Status]) VALUES(
+@Title,
+@Description,
+@CreateTime,
+@Status
+)
+";
+                }
+                else {
+                    sql = $@"
+UPDATE News set Title = @Title, Description = @Description  WHERE ID = @ID
+";
+                }
+                conn.Execute(sql, entity);
+            }
+            return true;
+        }
+
+        public List<NewsViewModels> GetNewsTitle()
+        { 
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                return conn.Query<NewsViewModels>($@"SELECT id,Title,CreateTime FROM News Order by ID desc").ToList();
+            }
+        }
+        public Entity.NewsEntity GetNewsInfo(string id) {
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                return conn.Query<Entity.NewsEntity>($"SELECT * FROM News where ID = {id}").FirstOrDefault();
+            }
+        }
+
+        public bool DelNews(string id ) {
+
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                conn.Execute($@"DELETE FROM News where ID = {id}");
+                return true;
             }
         }
 

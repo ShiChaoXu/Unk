@@ -1,5 +1,6 @@
 ﻿var g_s = {
-    apiroot: true ? "http://unk-token.com:8091/api/" : 'http://localhost:8091/api/',
+    // "http://unk-token.com:8091/api/" : 'http://localhost:8091/api/'
+    apiroot: 'http://unk-token.com:9051/api/',
     cookie: 'GPMP.User',
     user: null,
     cover: {

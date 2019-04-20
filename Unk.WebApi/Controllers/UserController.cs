@@ -370,5 +370,63 @@ namespace Unk.WebApi.Controllers
                 Data = rList
             };
         }
+
+        [HttpPost]
+        public object InsertNews([FromBody]NewsViewModels models) {
+            var results = g_UserInfoBiz.InsertOrUpdateNews(new NewsEntity()
+            {
+                ID = models.ID,
+                Title = models.Title,
+                Description = models.Description,
+                Status = 1,
+                CreateTime = DateTime.Now
+            });
+
+            return new
+            {
+                Data = new
+                {
+                    Status = 1
+                }
+            };
+        }
+
+        [HttpGet]
+        public object GetNewsTitle() {
+
+            var rList = g_UserInfoBiz.GetNewsTitle();
+            return new
+            {
+                Data = new
+                {
+                    List = rList
+                }
+            };
+        }
+        [HttpGet]
+        public object GetNewsInfo(string p_ID)
+        {
+            var data = g_UserInfoBiz.GetNewsInfo(p_ID);
+            return new
+            {
+                Data = new
+                {
+                    data
+                }
+            };
+        }
+        [HttpGet]
+        public object DelNewsInfo(string p_ID) {
+            var data = g_UserInfoBiz.DelNews(p_ID);
+            return new
+            {
+
+                Data = new
+                {
+                    data = true
+                }
+            };
+        }
+
     }
 }

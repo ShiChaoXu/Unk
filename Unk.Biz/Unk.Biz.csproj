@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\GainsInHistoryEntity.cs" />
+    <Compile Include="Entity\NewsEntity.cs" />
     <Compile Include="Entity\TokenDetailsEntity.cs" />
     <Compile Include="Entity\TokenStoreEntity.cs" />
     <Compile Include="Entity\UserInfoEntity.cs" />

@@ -5,7 +5,13 @@ using System.Web;
 
 namespace Unk.Core.ViewModel
 {
-    
+    public class NewsViewModels
+    {
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string CreateTime { get; set; }
+    }
 
     public class UserViewModels
     {

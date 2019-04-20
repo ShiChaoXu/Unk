@@ -7,3 +7,10 @@ AutoFullPrice/bin
 /Unk.WebApi/obj/Release
 /WebAdmin/obj/Release
 /Unk.Biz/bin/Release
+/.vs
+/AutoFullPrice/obj
+/Unk.Biz/obj
+/Unk.Core/bin
+/Unk.Core/obj
+/Unk.WebApi/bin
+/WebAdmin/bin
