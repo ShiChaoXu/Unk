@@ -263,7 +263,7 @@ UPDATE News set Title = @Title, Description = @Description  WHERE ID = @ID
         }
 
         public List<NewsViewModels> GetNewsTitle()
-        { 
+        {
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
             {
                 return conn.Query<NewsViewModels>($@"SELECT id,Title,CreateTime FROM News Order by ID desc").ToList();
@@ -276,13 +276,71 @@ UPDATE News set Title = @Title, Description = @Description  WHERE ID = @ID
             }
         }
 
-        public bool DelNews(string id ) {
+        public bool DelNews(string id) {
 
             using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
             {
                 conn.Execute($@"DELETE FROM News where ID = {id}");
                 return true;
             }
+        }
+
+        public static string GetTokenName(string name) {
+            switch (name)
+            {
+                default:
+                    return name;
+                case "UTC":
+                    return "VBX";
+            }
+        }
+
+        public Tuple<bool, string> TransformToken(TransFormViewModels models)
+        {
+            bool results = true;
+            string message = string.Empty;
+            using (SqlConnection conn = new SqlConnection(Core.Utils.SqlConnectionString))
+            {
+                decimal total = conn.Query<decimal>($"SELECT SUM(CurrentIcon)  from dbo.TokenDetails where UserID = {models.UserID} and TokenType = '{GetTokenName(models.TokenType)}'").FirstOrDefault();
+                if (total - models.InputCount < 0)
+                {
+                    results = false;
+                    message = "您输入的数量大于您的持有量，请重新输入";
+                }
+                if (results)
+                {
+                    conn.Execute($@"INSERT INTO [dbo].[TokenDetails]
+           ([UserID]
+           ,[TokenType]
+           ,[CurrentIcon]
+           ,[CurrentDescription]
+           ,[Stauts]
+           ,[CreateTime])
+     VALUES
+           ({models.UserID}
+           ,'{GetTokenName(models.TokenType)}'
+           ,{models.InputCount * -1}
+           ,'通证转换，扣除{Math.Round(models.InputCount,4)}'
+           ,1
+           ,'{DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss")}')");
+
+                    conn.Execute($@"INSERT INTO [dbo].[TokenDetails]
+           ([UserID]
+           ,[TokenType]
+           ,[CurrentIcon]
+           ,[CurrentDescription]
+           ,[Stauts]
+           ,[CreateTime])
+     VALUES
+           ({models.UserID}
+           ,'{GetTokenName(models.ToTokenType)}'
+           ,{models.TransCount}
+           ,'通证转换，增加{Math.Round(models.TransCount, 4)}'
+           ,1
+           ,'{DateTime.UtcNow.ToString("yyyy-MM-dd hh:mm:ss")}')");
+                }
+            }
+            return new Tuple<bool, string>(results, message);
         }
 
        

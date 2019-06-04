@@ -51,4 +51,13 @@ namespace Unk.Core.ViewModel
         public string ID { get; set; }
     }
 
+    public class TransFormViewModels
+    {
+        public int UserID { get; set; }
+        public string TokenType { get; set; }
+        public string ToTokenType { get; set; }
+        public decimal InputCount { get; set; }
+        public decimal TransCount { get; set; }
+    }
+
 }

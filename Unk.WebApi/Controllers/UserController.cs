@@ -428,5 +428,17 @@ namespace Unk.WebApi.Controllers
             };
         }
 
+        [HttpPost]
+        public object TransFormToken([FromBody] TransFormViewModels models) {
+            var results = g_UserInfoBiz.TransformToken(models);
+            return new {
+                Data = new
+                {
+                    Status = results.Item1,
+                    Message = results.Item2
+                }
+            };
+        }
+
     }
 }

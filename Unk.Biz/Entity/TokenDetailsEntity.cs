@@ -10,7 +10,7 @@ namespace Unk.Biz.Entity
     {
         public int UserID { get; set; }
         public string TokenType { get; set; }
-        public Int64 CurrentIcon { get; set; }
+        public decimal CurrentIcon { get; set; }
         public string CurrentDescription { get; set; }
 
     } 
